@@ -18,6 +18,8 @@
     },
     "homepage": "https://github.com/ErikTenecela/Bamazon#readme",
     "dependencies": {
+        "@lvchengbin/cli-table": "0.0.0",
+        "cli-table2": "^0.2.0",
         "inquirer": "^7.0.0",
         "mysql": "^2.17.1",
         "promise-mysql": "^4.1.1"
