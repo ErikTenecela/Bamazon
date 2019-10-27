@@ -50,23 +50,31 @@ async function query(connect) {
         if (res.length === 0) {
             console.log("The ID you chose doesn't exists please type a valid ID.")
         } else {
-            console.log(`Thank you for your purchase.`)
-            const units = inquirer
+            inquirer
                 .prompt({
                     name: "Units",
                     type: "input",
                     message: "Please type the amount of units you want to purchase this item."
                 })
+                .then(val => {
+                    const unitsAnswer = val.Units
 
-            const unitsAnswer = units["Units"]
-            connect.query("UPDATE products SET stock_quantity = ? ", unitsAnswer, (err, res) => {
-                if (err) throw err;
-                if (res.length === 0) {
-                    console.log(`Please type a valid stock number`)
-                } else {
-                    console.log(`its working`)
-                }
-            })
+                    if (unitsAnswer > res[0].stock_quantity) {
+                        console.log(`Sorry to say but we have only ${res[0].stock_quantity}`)
+                    } else {
+                        const b = res[0].stock_quantity - unitsAnswer
+                        connect.query(`UPDATE products SET stock_quantity = ${b} WHERE item_id = ${res[0].item_id}`, (err, resUpdate) => {
+                            if (err) throw err;
+
+
+                            console.log("Thank you for shopping with us come again.")
+                            connect.end()
+                        })
+                    }
+
+                })
+
+
         }
     })
 
