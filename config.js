@@ -5,6 +5,6 @@ module.exports = {
 
     user: 'root',
 
-    password: 'Dragoneye123#',
+    password: '',
     database: 'bamazon',
 };
